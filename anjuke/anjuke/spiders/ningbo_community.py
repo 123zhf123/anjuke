@@ -58,6 +58,7 @@ class NingboCommunity(scrapy.Spider):
 
         data = json_data['data']
         page = response.meta.get('page', 1)
+        self.logger.debug('正在爬取{}的第{}页({})'.format(response.meta['block_name'], page, response.meta['link']))
 
         for community in data:
             item = Anjuke_xq_sale()
