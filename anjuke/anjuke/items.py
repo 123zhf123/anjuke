@@ -14,7 +14,7 @@ class AnjukeItem(scrapy.Item):
     pass
 
 
-class Anjuke_fy_rent2(scrapy.Item):
+class AnjukeFyRent2(scrapy.Item):
     tag = scrapy.Field()
     city = scrapy.Field()
     house_id = scrapy.Field()
@@ -37,7 +37,7 @@ class Anjuke_fy_rent2(scrapy.Item):
     origin_price_data = scrapy.Field()
 
 
-class Anjuke_xq_sale(scrapy.Item):
+class AnjukeXqSale(scrapy.Item):
     tag = scrapy.Field()
     city = scrapy.Field()
     district_name = scrapy.Field()
