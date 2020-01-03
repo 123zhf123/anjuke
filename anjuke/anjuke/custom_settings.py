@@ -12,13 +12,16 @@ ningbo_community = {
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
         'x-requested-with': 'XMLHttpRequest',
     },
-    'DOWNLOAD_DELAY': 0.5,
+    'DOWNLOAD_DELAY': 0.8,
     'HTTPERROR_ALLOWED_CODES': [302],
     # 'SCHEDULER': "scrapy_redis.scheduler.Scheduler",
     # 'DUPEFILTER_CLASS': "scrapy_redis.dupefilter.RFPDupeFilter",
     # 'REDIS_PARAMS': {
     #     'password': '1291988293'
     # }
+    'DOWNLOADER_MIDDLEWARES': {
+        'anjuke.middlewares.ProxyMiddleware': 300
+    }
 }
 
 ningbo_fangyuan = {
