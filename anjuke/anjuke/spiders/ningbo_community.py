@@ -81,6 +81,9 @@ class NingboCommunity(scrapy.Spider):
         if first_url is None:
             first_url = data[0]['url']
         if first_url != data[0]['url'] or page == 1:
+            if len(data) == 0:
+                self.logger.debug('空数据({}):\n{}'.format(response.url, json_data))
+                return
             page += 1
             link = response.meta['link']
             url = '%s?p=%d' % (link, page)
