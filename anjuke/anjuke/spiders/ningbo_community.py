@@ -16,7 +16,6 @@ class NingboCommunity(scrapy.Spider):
         'https://m.anjuke.com/nb/community/o2/'
     ]
     custom_settings = ningbo_community
-    first_url = None
 
     def start_requests(self):
         for url in self.start_urls:
@@ -78,16 +77,18 @@ class NingboCommunity(scrapy.Spider):
                 dont_filter=True
             )
 
-        if self.first_url is None:
-            self.first_url = data[0]['url']
-        if self.first_url != data[0]['url'] or page == 1:
+        first_url = response.meta.get('first_url')
+        if first_url is None:
+            first_url = data[0]['url']
+        if first_url != data[0]['url'] or page == 1:
             page += 1
             link = response.meta['link']
             url = '%s?p=%d' % (link, page)
             yield scrapy.Request(
                 url=url,
                 dont_filter=True,
-                meta={'page': page, 'link': link, 'block_name': response.meta['block_name']}
+                meta={'page': page, 'link': link, 'block_name': response.meta['block_name'], 'first_url': first_url},
+                callback=self.parse2
             )
 
     def parse_detail(self, response):
