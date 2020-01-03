@@ -99,6 +99,8 @@ class NingboCommunity(scrapy.Spider):
         lat_lon = re.search(lat_lon_pattern, response.text)
         item = response.meta['item']
 
+        community_id = re.search(r'&comm_id=(\d+)', response.text)
+
         # # 请求异常时请自定更新headers中的cookie
         if lat_lon is None:
             self.logger.debug('获取数据失败(%s)' % item['url'])
@@ -123,12 +125,8 @@ class NingboCommunity(scrapy.Spider):
         item['type_'] = get_xpath_string('//div[@class="header-field"]/span')
 
         yield scrapy.Request(
-            url='https://m.anjuke.com/ajax/new/trendency/price/all?comm_id=%s' % item['comm_id'],
+            url='https://m.anjuke.com/ajax/new/trendency/price/all?comm_id=%s' % community_id,
             headers={
-                ':authority': 'm.anjuke.com',
-                ':method': 'GET',
-                ':path': '/ajax/new/trendency/price/all?comm_id=%s' % item['comm_id'],
-                ':scheme': 'https',
                 'accept': 'application/json',
                 'accept-encoding': 'gzip, deflate, br',
                 'accept-language': 'zh-CN,zh;q=0.9',
