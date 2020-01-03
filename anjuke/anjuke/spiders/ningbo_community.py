@@ -52,7 +52,7 @@ class NingboCommunity(scrapy.Spider):
 
     def parse2(self, response):
         json_data = loads(response.text)
-        if json_data['code'] == 0:
+        if json_data['code'] != 0:
             self.logger.debug('爬取第{}页失败: {}'.format(response.meta.get('page', 1), json_data['msg']))
             return
 
