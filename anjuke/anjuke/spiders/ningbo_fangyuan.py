@@ -5,7 +5,7 @@ import scrapy
 from scrapy_redis.spiders import RedisSpider
 
 from anjuke.utils import ParseFont, get_re_result
-from anjuke.items import Anjuke_fy_rent2
+from anjuke.items import AnjukeFyRent2
 from anjuke.custom_settings import ningbo_fangyuan
 
 
@@ -40,7 +40,7 @@ class NingboFangyuan(RedisSpider):
             addr = addr.xpath('string(.)').get()
             if addr:
                 addr = addr.replace('&nbsp;', '').split('\n')[-1].strip()
-            item = Anjuke_fy_rent2()
+            item = AnjukeFyRent2()
             item['block_name'] = response.meta['block_name']
             item['addr'] = addr
             item['link'] = link
