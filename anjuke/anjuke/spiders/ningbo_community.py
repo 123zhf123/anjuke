@@ -18,6 +18,25 @@ class NingboCommunity(scrapy.Spider):
     custom_settings = ningbo_community
     first_url = None
 
+    def start_requests(self):
+        for url in self.start_urls:
+            yield scrapy.Request(
+                url=url,
+                headers={
+                    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+                    'accept-encoding': 'gzip, deflate, br',
+                    'accept-language': 'zh-CN,zh;q=0.9',
+                    'cache-control': 'no-cache',
+                    'cookie': 'sessid=B6305D5E-A8B0-E771-D19F-0BE4E3188E06; aQQ_ajkguid=126FAD93-73B6-90BF-EB8A-F1F4A68B5D60; lps=http%3A%2F%2Fnb.anjuke.com%2F%7C; twe=2; ANJUKE_BUCKET=pc-home%3AErshou_Web_Home_Home-a; _ga=GA1.2.2119016282.1577793913; 58tj_uuid=153d294f-082f-4bd7-b780-34f08b1ee29b; als=0; wmda_uuid=a4254b140cdcef09613f3c0e3ca384c6; wmda_new_uuid=1; wmda_visited_projects=%3B6145577459763; ctid=32; app_cv=unknown; ajk_member_verify=2Av8tX2ayJE228YodNFH92NgiqO7fuYsEl9x0w0kWTY%3D; ajk_member_verify2=MTgwNjc2MTc0fDBpSjQ2Snl8MQ%3D%3D; ajkAuthTicket=TT=52d8a5a74d7158eb19ad7d33d1e5ffc9&TS=1577850043276&PBODY=j9h7f7sYIC1dGiG9zQl8q8gm2CBLw89Sy1WiKiLk5Qni7swqd6aXnw6FjGZhPgjuYw8eiUOCo9o2H6QQxUSzhv0LAv5JfY1CeYBJZd7cnYfAz1qoz1ePXZD_n5062wp-4vxwaAx_bF6_-dY9x7EsmzRNt4o2GaE0jBBEFGpR0_s&VER=2; ctid=32; ajk_member_id=180676174; wmda_uuid=c694c99e2c754b7024780e7671b89ae3; wmda_new_uuid=1; wmda_visited_projects=%3B6289197098934; ajk_view_visit={%22timeStamp%22:%222020/1/2%22%2C%22rent_view%22:1}; _gid=GA1.2.1832719355.1577960385; aQQ_brokerguid=79030027-6355-CD10-1A93-248199C10344; xzfzqtoken=Ti0YRYuzdoOAN39lJXfzYdaDG0ehbSdt79kvO6e7wZYiHzrrK%2BLGsaQGVitLONslin35brBb%2F%2FeSODvMgkQULA%3D%3D; new_uv=13; ajkAuthTicket=TT=52d8a5a74d7158eb19ad7d33d1e5ffc9&TS=1578023291513&PBODY=LLPjPaMq9FbWNfABM2c30DKNzAOjsv-p7NNYYE7K4XgwrAhs0I-3OMe8vf3IbKEpnOdcBdZbX4tvl8VkqeNXwFTZ8Zvq8FXTbqVy6yuusXFQ3jLu5Rm1pIIOQQQ8dLW-7RZv3pqo1ubtyvf4JuUdxNg8tKUyhqt5CwFv4OC9hZc&VER=2',
+                    'pragma': 'no-cache',
+                    'sec-fetch-mode': 'navigate',
+                    'sec-fetch-site': 'none',
+                    'sec-fetch-user': '?1',
+                    'upgrade-insecure-requests': '1',
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36',
+                }
+            )
+
     def parse(self, response):
         for block_id in ['blockinfo-0', 'blockinfo-1', 'blockinfo-4']:
             urls = response.xpath('//div[@id="{}"]/div/a'.format(block_id))
@@ -90,6 +109,7 @@ class NingboCommunity(scrapy.Spider):
             data = response.xpath(xpath).xpath('string(.)').get()
             if data:
                 return data.strip()
+
         developer = re.search(r'商：</dt>.*?<dd>(.*?)</dd>', response.text, re.S)
         if developer:
             developer = developer.group(1)
