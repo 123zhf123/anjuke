@@ -8,7 +8,7 @@ from datetime import datetime
 
 import pymongo
 
-from anjuke.items import Anjuke_fy_rent2, Anjuke_xq_sale
+from anjuke.items import AnjukeFyRent2, AnjukeXqSale
 
 
 class AnjukePipeline(object):
@@ -38,10 +38,10 @@ class MongoPipeline(object):
     def process_item(self, item, spider):
         collection_name = item.__class__.__name__
         item['create_time'] = datetime.now()
-        if collection_name == Anjuke_fy_rent2.__name__:
+        if collection_name == AnjukeFyRent2.__name__:
             if self.mongo_db[collection_name].find_one({'link': item['link']}) is None:
                 self.mongo_db[collection_name].insert(dict(item))
-        elif collection_name == Anjuke_xq_sale.__name__:
+        elif collection_name == AnjukeXqSale.__name__:
             if self.mongo_db[collection_name].find_one({'url': item['url']}) is None:
                 self.mongo_db[collection_name].insert(dict(item))
         else:

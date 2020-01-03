@@ -4,7 +4,7 @@ from json import loads
 import scrapy
 
 from anjuke.custom_settings import ningbo_community
-from anjuke.items import Anjuke_xq_sale
+from anjuke.items import AnjukeXqSale
 
 
 class NingboCommunity(scrapy.Spider):
@@ -61,7 +61,7 @@ class NingboCommunity(scrapy.Spider):
         self.logger.debug('正在爬取{}的第{}页({})'.format(response.meta['block_name'], page, response.meta['link']))
 
         for community in data:
-            item = Anjuke_xq_sale()
+            item = AnjukeXqSale()
             item['tag'] = self.tag
             item['city'] = self.city
             item['block_name'] = response.meta['block_name']
